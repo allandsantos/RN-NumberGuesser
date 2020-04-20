@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { StyleSheet, Text, View, Button, Alert, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Button, Alert, FlatList, Dimensions } from 'react-native'
 import NumberBox from '../components/NumberBox';
 import Card from '../components/Card';
 import LabelText from '../components/LabelText';
 import ControlButton from '../components/ControlButton';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Colors from '../constants/colors';
+
+const _WIDTH = Dimensions.get('window').width;
+const _HEIGHT = Dimensions.get('window').height;
 
 const generateRandomBetween = (min, max, exclude) => {
     min = Math.ceil(min);
@@ -79,10 +82,10 @@ const GameScreen = props => {
             </NumberBox>
             <Card style={styles.buttonContainer}>
                 <ControlButton onPress={() => nextGuessHandler('lower')}>
-                    <FontAwesome5 name="minus" size={22} />
+                    <FontAwesome5 name="minus" size={_HEIGHT < 600 ? 18 : 22} />
                 </ControlButton>
                 <ControlButton onPress={() => nextGuessHandler('greater')}>
-                    <FontAwesome5 name="plus" size={22} />
+                    <FontAwesome5 name="plus" size={_HEIGHT < 600 ? 18 : 22} />
                 </ControlButton>
             </Card>
             <FlatList
@@ -104,16 +107,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     label: {
-        fontSize: 18,
+        fontSize: _HEIGHT < 600 ?  16 : 18,
         fontWeight: 'bold'
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 10,
-        width: 300,
-        maxWidth: '80%',
-        paddingVertical: 40
+        width: _WIDTH < 350 ? '90%' : '80%',
+        paddingVertical: _HEIGHT * 0.052
     }
 })
 
@@ -122,17 +124,16 @@ const logStyle = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 33,
+        paddingHorizontal: _WIDTH * 0.084,
         alignItems: 'center',
         paddingVertical: 2,
     },
     logContainer: {
         marginTop: 10,
-        width: 250,
-        padding: 40,
+        width: _WIDTH * 0.637,
         elevation: 6,
         borderRadius: 10,
-        padding: 20,
+        padding: _HEIGHT * 0.026,
     },
     text: {
         fontSize: 18,

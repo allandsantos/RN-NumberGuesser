@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dimensions, StyleSheet, Text, View, Button, TouchableWithoutFeedback, Keyboard, Alert, TouchableOpacity } from 'react-native'
+import { Dimensions, StyleSheet, Text, KeyboardAvoidingView, View, Button, TouchableWithoutFeedback, Keyboard, Alert, TouchableOpacity, ScrollView } from 'react-native'
 import Card from '../components/Card'
 import Colors from '../constants/colors';
 import colors from '../constants/colors';
@@ -9,6 +9,9 @@ import NumberBox from '../components/NumberBox';
 import LabelText from '../components/LabelText';
 import TitleText from '../components/TitleText';
 import MainButton from '../components/MainButton';
+
+const _WIDTH = Dimensions.get('window').width;
+const _HEIGHT = Dimensions.get('window').height;
 
 const StartGameScreen = props => {
     const [enteredValue, setEnteredValue] = useState('');
@@ -60,33 +63,37 @@ const StartGameScreen = props => {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={() => {
-            Keyboard.dismiss();
-        }}>
-            <View style={styles.screen}>
-                <TitleText style={styles.title}>Inicie um novo jogo!</TitleText>
-                <Card style={styles.cardContainer}>
-                    <View style={styles.inputContainer}>
-                        <LabelText style={styles.label}>Insira um número</LabelText>
-                        <Input
-                            style={styles.input}
-                            keyboardType='number-pad'
-                            maxLength={2}
-                            value={enteredValue}
-                            onChangeText={numberInputHandler} />
-                    </View>
-                    <View style={styles.buttonContainer}>
-                        <View style={styles.button}>
-                            <Button title='Resetar' color={Colors.secondary} onPress={resetInputHandler} />
+        <ScrollView>
+            <KeyboardAvoidingView behavior='position' keyboardVerticalOffset='30'>
+            <TouchableWithoutFeedback onPress={() => {
+                Keyboard.dismiss();
+            }}>
+                <View style={styles.screen}>
+                    <TitleText style={styles.title}>Inicie um novo jogo!</TitleText>
+                    <Card style={styles.cardContainer}>
+                        <View style={styles.inputContainer}>
+                            <LabelText style={styles.label}>Insira um número</LabelText>
+                            <Input
+                                style={styles.input}
+                                keyboardType='number-pad'
+                                maxLength={2}
+                                value={enteredValue}
+                                onChangeText={numberInputHandler} />
                         </View>
-                        <View style={styles.button}>
-                            <Button title='Confirmar' color={Colors.mainApp} onPress={confirmInputHanler} />
+                        <View style={styles.buttonContainer}>
+                            <View style={styles.button}>
+                                <Button title='Resetar' color={Colors.secondary} onPress={resetInputHandler} />
+                            </View>
+                            <View style={styles.button}>
+                                <Button title='Confirmar' color={Colors.mainApp} onPress={confirmInputHanler} />
+                            </View>
                         </View>
-                    </View>
-                </Card>
-                {confirmedOutput}
-            </View>
-        </TouchableWithoutFeedback>
+                    </Card>
+                    {confirmedOutput}
+                </View>
+            </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </ScrollView>
     )
 }
 
@@ -99,15 +106,13 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        marginVertical: 10,
+        marginVertical: _HEIGHT * 0.013,
     },
     cardContainer: {
-        width: '80%',
-        maxWidth: '90%',
-        minWidth: 300,
+        width: _WIDTH < 350 ? '90%' : '80%',
         alignItems: 'stretch',
     },
-    inputContainer:{
+    inputContainer: {
         width: '100%',
         alignItems: 'center',
     },
@@ -123,19 +128,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-between',
-        paddingHorizontal: 15,
-        marginTop: 15,
+        paddingHorizontal: _WIDTH < 350 ? 5 : 15,
+        marginTop: _HEIGHT < 600 ? 5 : 15,
     },
     button: {
-        //width: 100
-        width: Dimensions.get('window').width / 4
-    },
-    confirmCard: {
-        width: 200,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 20,
-        backgroundColor: Colors.purple,
+        width: _WIDTH > 350 ? _WIDTH / 4 : _WIDTH / 3,
     },
     chosenNumber: {
         textAlign: 'center',
@@ -145,7 +142,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     chosenContainer: {
-        marginVertical: 50,
+        marginTop: _HEIGHT > 600 ? _HEIGHT * 0.065 : _HEIGHT * 0.03,
+        marginBottom: _HEIGHT * 0.065,
         alignItems: 'center',
     },
 })

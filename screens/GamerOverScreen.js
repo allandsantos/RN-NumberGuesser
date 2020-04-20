@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, Image } from 'react-native'
+import { StyleSheet, Text, View, Button, Image, Dimensions } from 'react-native'
 import Card from '../components/Card'
 import Colors from '../constants/colors'
 import FontSizes from '../constants/fontSizes'
@@ -7,6 +7,9 @@ import LabelText from '../components/LabelText'
 import TitleText from '../components/TitleText'
 import fontFamilies from '../constants/fontFamilies'
 import MainButton from '../components/MainButton'
+
+const _WIDTH = Dimensions.get('window').width;
+const _HEIGHT = Dimensions.get('window').height;
 
 const GamerOverScreen = props => {
 
@@ -49,16 +52,16 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
-        borderRadius: 150,
-        borderWidth: 3,
+        borderRadius: _WIDTH * 0.76 / 2,
+        borderWidth: _WIDTH < 350 ? 2 : 3,
         borderColor: 'black'
     },
     imageContainer: {
-        width: 300,
-        height: 300,
+        width: _WIDTH * 0.76,
+        height: _WIDTH * 0.76,
         borderColor: Colors.dark,
         overflow: 'hidden',
-        marginVertical: 30,
+        marginVertical: _HEIGHT * 0.039,
     },
     container: {
         flex: 1,
@@ -66,42 +69,19 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     dataCard: {
-        padding: 30,
-        width: 300,
-        maxWidth: '80%',
+        padding: _WIDTH < 350 ? 15 : 30,
+        width: _WIDTH < 350 ? '90%' : '80%',
         justifyContent: 'center',
         alignItems: 'center',
     },
     dataLabel: {
         marginTop: 10,
         textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 15,
+        fontSize: _HEIGHT < 600 ? 12 : 16
     },
     dataText: {
         color: Colors.mainApp,
-        marginHorizontal: 3,
         fontFamily: fontFamilies.openSansBold
-    },
-    endCard: {
-        padding: 30,
-        width: 300,
-        maxWidth: '80%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: Colors.primary,
-        marginBottom: 50,
-    },
-    endText: {
-        color: 'black',
-    },
-    dataContainer: {
-        backgroundColor: Colors.info,
-        padding: 7,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 6,
-        width: 30,
-        marginTop: 5,
-        marginLeft: 5
     },
 })

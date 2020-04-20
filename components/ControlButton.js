@@ -1,8 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import Colors from '../constants/colors';
 import fontFamilies from '../constants/fontFamilies';
 import fontSizes from '../constants/fontSizes';
+
+const _WIDTH = Dimensions.get('window').width;
+const _HEIGHT = Dimensions.get('window').height;
 
 const ControlButton = props => {
     return (
@@ -24,10 +27,10 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '100%',
-        height: 50,
+        height: _HEIGHT * 0.0658,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 25,
+        borderRadius: _HEIGHT < 600 ? 15 : 25,
         backgroundColor: Colors.mainApp
     },
     buttonText: {
