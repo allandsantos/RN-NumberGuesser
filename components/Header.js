@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Colors from '../constants/colors';
 import FontSizes from '../constants/fontSizes';
+import fontFamilies from '../constants/fontFamilies';
 
 const Header = props => {
     const {title} = props; 
@@ -25,5 +26,6 @@ const styles = StyleSheet.create({
     title:{
         color: Colors.white,
         fontSize: FontSizes.header,
+        fontFamily: fontFamilies.openSansBold,
     }
 })

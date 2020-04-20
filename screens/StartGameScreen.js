@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Button, TouchableWithoutFeedback, Keyboard, Alert, TouchableOpacity } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Button, TouchableWithoutFeedback, Keyboard, Alert, TouchableOpacity } from 'react-native'
 import Card from '../components/Card'
 import Colors from '../constants/colors';
 import colors from '../constants/colors';
 import FontSizes from '../constants/fontSizes';
 import Input from '../components/Input';
 import NumberBox from '../components/NumberBox';
+import LabelText from '../components/LabelText';
+import TitleText from '../components/TitleText';
+import MainButton from '../components/MainButton';
 
 const StartGameScreen = props => {
     const [enteredValue, setEnteredValue] = useState('');
@@ -43,15 +46,15 @@ const StartGameScreen = props => {
                 <View>
                     <View style={styles.chosenContainer}>
                         <Card style={styles.chosenCard}>
-                            <Text style={styles.chosenNumber}>Número escolhido</Text>
+                            <LabelText style={styles.chosenNumber}>Número escolhido</LabelText>
                             <NumberBox>
                                 {selectedNumber}
                             </NumberBox>
                         </Card>
                     </View>
-                    <TouchableOpacity activeOpacity={0.85} style={styles.containerStartGame} onPressOut={() => props.onStartGame(selectedNumber)}>
-                        <Text style={styles.textStartButton}>ESTOU PRONTO</Text>
-                    </TouchableOpacity>
+                    <MainButton onPress={() => props.onStartGame(selectedNumber)}>
+                        INICIAR JOGO
+                    </MainButton>
                 </View>
             );
     }
@@ -61,15 +64,17 @@ const StartGameScreen = props => {
             Keyboard.dismiss();
         }}>
             <View style={styles.screen}>
-                <Text style={styles.title}>Inicie um novo jogo!</Text>
-                <Card style={styles.inputContainer}>
-                    <Text style={styles.label}>Insira um número</Text>
-                    <Input
-                        style={styles.input}
-                        keyboardType='number-pad'
-                        maxLength={2}
-                        value={enteredValue}
-                        onChangeText={numberInputHandler} />
+                <TitleText style={styles.title}>Inicie um novo jogo!</TitleText>
+                <Card style={styles.cardContainer}>
+                    <View style={styles.inputContainer}>
+                        <LabelText style={styles.label}>Insira um número</LabelText>
+                        <Input
+                            style={styles.input}
+                            keyboardType='number-pad'
+                            maxLength={2}
+                            value={enteredValue}
+                            onChangeText={numberInputHandler} />
+                    </View>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
                             <Button title='Resetar' color={Colors.secondary} onPress={resetInputHandler} />
@@ -94,12 +99,16 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        fontSize: FontSizes.title,
         marginVertical: 10,
     },
-    inputContainer: {
-        width: 300,
-        maxWidth: '80%',
+    cardContainer: {
+        width: '80%',
+        maxWidth: '90%',
+        minWidth: 300,
+        alignItems: 'stretch',
+    },
+    inputContainer:{
+        width: '100%',
         alignItems: 'center',
     },
     input: {
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
     },
     label: {
-        fontSize: FontSizes.label
+        fontSize: FontSizes.label,
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -118,7 +127,8 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     button: {
-        width: 100
+        //width: 100
+        width: Dimensions.get('window').width / 4
     },
     confirmCard: {
         width: 200,
@@ -128,30 +138,14 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.purple,
     },
     chosenNumber: {
-        marginBottom: 15,
-        fontWeight: 'bold',
         textAlign: 'center',
-        fontSize: FontSizes.header
+        fontSize: FontSizes.header,
     },
-    chosenCard:{
+    chosenCard: {
         alignItems: 'center'
     },
     chosenContainer: {
-        marginTop: 25,
+        marginVertical: 50,
         alignItems: 'center',
     },
-    containerStartGame: {
-        width: 300,
-        height: 50,
-        marginTop: 50,
-        maxWidth: '80%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: Colors.success
-    },
-    textStartButton: {
-        color: Colors.white,
-        fontSize: 18,
-        fontWeight: 'bold'
-    }
 })

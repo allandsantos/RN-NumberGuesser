@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         padding: 20,
         borderWidth: 3,
         borderColor: Colors.purple,
+        marginTop: 15,
     },  
     confirmedNumber: {
         fontWeight: 'bold',
